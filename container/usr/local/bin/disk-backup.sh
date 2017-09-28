@@ -2,8 +2,6 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-set -x
-
 TARGET_DIR="${TARGET_DIR:-}"
 SOURCE_DIR="${SOURCE_DIR:-}"
 if [[ -z "${TARGET_DIR}" ]]; then
