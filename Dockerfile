@@ -8,3 +8,5 @@ RUN set -x \
         rsync
 
 COPY container/ /
+
+CMD [ "disk-backup.sh" ]
