@@ -44,14 +44,14 @@ docker run --rm \
     --env "TARGET_DIR=/target" \
     --volume "/apps:/source:ro" \
     --volume "/backups/apps:/target" \
-    weikinhuang:rsync-backup:latest
+    weikinhuang/rsync-backup:latest
 ```
 
 #### Crontab
 
 `crontab`:
 ```
-30 9 * * * /usr/bin/docker run --rm --env "SOURCE_DIR=/source" --env "TARGET_DIR=/target" --volume "/apps:/source:ro" --volume "/backups/apps:/target" weikinhuang:rsync-backup:latest
+30 9 * * * /usr/bin/docker run --rm --env "SOURCE_DIR=/source" --env "TARGET_DIR=/target" --volume "/apps:/source:ro" --volume "/backups/apps:/target" weikinhuang/rsync-backup:latest
 ```
 
 #### Systemd Timer
@@ -79,7 +79,7 @@ Requires=docker.service
 TimeoutStartSec=0
 Type=oneshot
 
-Environment=DOCKER_IMAGE=weikinhuang:rsync-backup:latest
+Environment=DOCKER_IMAGE=weikinhuang/rsync-backup:latest
 Environment=CONTAINER_NAME=%n
 
 Environment="SOURCE_DIR=/apps"
@@ -115,7 +115,7 @@ spec:
         spec:
           containers:
           - name: rsync-backup
-            image: weikinhuang:rsync-backup:latest
+            image: weikinhuang/rsync-backup:latest
             imagePullPolicy: Always
             env:
               - name: SOURCE_DIR
