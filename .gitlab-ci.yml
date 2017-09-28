@@ -4,7 +4,7 @@ stages:
 deploy-image:
   stage: deploy
   script:
-    - [[ -z "${HUB_REGISTRY_IMAGE}" ]] && false
+    - '[[ -z "${HUB_REGISTRY_IMAGE}" ]] && false'
     - docker login -u "${HUB_REGISTRY_USERNAME}" -p "${HUB_REGISTRY_PASSWORD}"
     - docker build --force-rm=true --pull=true --no-cache --file Dockerfile --tag "${HUB_REGISTRY_IMAGE}:latest" .
     - docker push "${HUB_REGISTRY_IMAGE}:latest"
