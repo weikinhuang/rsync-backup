@@ -43,6 +43,12 @@ if [[ -r /mnt/id_rsa ]] && [[ -r /mnt/id_rsa.pub ]]; then
     SSH_KEYFILE="-i ${SSH_KEYFILE_TMP}"
 fi
 
+# ssh verbosity level
+SSH_LOGGING_LEVEL="-q"
+if [[ -n ${VERBOSE:-} ]]; then
+    SSH_LOGGING_LEVEL="-v"
+fi
+
 # Clean up stray files
 function cleanup {
     if [[ -e "${SSH_KEYFILE_TMP}" ]]; then
@@ -62,7 +68,7 @@ RSYNC_ARGS=(
     --ignore-errors
     --verbose
     -F # --filter='dir-merge /.rsync-filter' repeated: --filter='- .rsync-filter'
-    --rsh="ssh -p ${SSH_PORT:-22} -q -o ConnectTimeout=${SSH_CONNECT_TIMEOUT:-5} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${SSH_KEYFILE} ${SSH_OPTIONS:-}"
+    --rsh="ssh -p ${SSH_PORT:-22} ${SSH_LOGGING_LEVEL} -o ConnectTimeout=${SSH_CONNECT_TIMEOUT:-5} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${SSH_KEYFILE} ${SSH_OPTIONS:-}"
     --link-dest="${CURRENT_TARGET_DIR}/"
     ${RSYNC_OPTIONS:-}
     "${SOURCE_DIR/%\//}/"
