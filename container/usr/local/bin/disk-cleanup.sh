@@ -9,8 +9,8 @@ fi
 TARGET_DIR="${TARGET_DIR:-}"
 MAX_AGE="${MAX_AGE:-180}"
 if [[ -z "${TARGET_DIR}" ]]; then
-  echo "Unknown TARGET_DIR"
-  exit 1
+    echo "Unknown TARGET_DIR"
+    exit 1
 fi
 
 if [[ ! -d "${TARGET_DIR}" ]]; then
@@ -26,6 +26,13 @@ FIND_ARGS=(
     -mtime +${MAX_AGE}
     -type d
 )
+
+# If there's no files to delete, that's ok
+if ! ( find "${FIND_ARGS[@]}" \
+    | grep -v incomplete \
+    | grep -q -v "$(basename "$(readlink "${TARGET_DIR_PATH}/daily.current")")" ); then
+    exit 0
+fi
 
 # print found files for logging
 find "${FIND_ARGS[@]}" \
