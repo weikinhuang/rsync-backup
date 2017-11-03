@@ -2,6 +2,10 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+if [[ -n ${VERBOSE:-} ]]; then
+    set -x
+fi
+
 TARGET_DIR="${TARGET_DIR:-}"
 MAX_AGE="${MAX_AGE:-180}"
 if [[ -z "${TARGET_DIR}" ]]; then

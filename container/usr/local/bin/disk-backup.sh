@@ -2,6 +2,10 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+if [[ -n ${VERBOSE:-} ]]; then
+    set -x
+fi
+
 TARGET_DIR="${TARGET_DIR:-}"
 SOURCE_DIR="${SOURCE_DIR:-}"
 if [[ -z "${TARGET_DIR}" ]]; then
@@ -58,7 +62,7 @@ RSYNC_ARGS=(
     --ignore-errors
     --verbose
     -F # --filter='dir-merge /.rsync-filter' repeated: --filter='- .rsync-filter'
-    --rsh="ssh -p ${SSH_PORT:-22} -q -o ConnectTimeout=5 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${SSH_KEYFILE} ${SSH_OPTIONS:-}"
+    --rsh="ssh -p ${SSH_PORT:-22} -q -o ConnectTimeout=${SSH_CONNECT_TIMEOUT:-5} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${SSH_KEYFILE} ${SSH_OPTIONS:-}"
     --link-dest="${CURRENT_TARGET_DIR}/"
     ${RSYNC_OPTIONS:-}
     "${SOURCE_DIR/%\//}/"
