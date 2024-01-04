@@ -33,6 +33,5 @@ services:
     volumes:
       - /SOURCE-FOLDER-TO-SYNC:/source:ro
       - /DESTINATION-FOLDER-TO-SYNC:/target
-    command: bash disk-backup.sh
     image: renedis/rsync-backup:latest
 ```
