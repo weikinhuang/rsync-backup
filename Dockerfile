@@ -1,5 +1,5 @@
 FROM alpine:latest
-LABEL maintainer="Wei Kin Huang"
+LABEL maintainer="renedis"
 
 RUN set -x \
     && apk add --no-cache \
