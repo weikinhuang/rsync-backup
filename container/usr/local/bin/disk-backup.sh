@@ -28,7 +28,7 @@ if [[ "${SOURCE_DIR}" == /* ]] && [[ ! -d "${SOURCE_DIR}" ]]; then
   exit 1
 fi
 
-TIMESTAMP="$(date +%Y-%m-%d.%H-%M-%S)"
+TIMESTAMP="$(date +%H.%M_%d-%m-%Y)"
 TARGET_DIR_PATH="${TARGET_DIR/%\//}/daily"
 COMPLETE_TARGET_DIR="${TARGET_DIR_PATH}.backup_${TIMESTAMP}"
 INCOMPLETE_TARGET_DIR="${TARGET_DIR_PATH}.incomplete"
